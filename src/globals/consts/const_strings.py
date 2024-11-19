@@ -1,9 +1,9 @@
 class ConstStrings:
-    # ? Servers hosts
-    localhost = "0.0.0.0"
-    database_gateway_host = "database_gateway"
-    pakash_algorithm_host = "pakash_algorithm"
-
-    # ? Date format
-    date_format = "%Y-%m-%d"
-    date_time_splitter = 'T'
+    # ? ENV keys
+    localhost_env_key = "LOCAL_HOST"
+    database_gateway_host_env_key = "DATABASE_GATEWAY_HOST"
+    local_port = "LOCAL_PORT"
+    database_gateway_port = "DATABASE_GATEWAY_PORT"
+    
+    username_key = "username"
+    password_key = "password"
