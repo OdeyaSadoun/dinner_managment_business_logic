@@ -9,6 +9,12 @@ class ZMQConstStrings:
     auth_resource = "auth"
     person_resource = "person"
     table_resource = "table"
+    
+    # ? Error messages
+    error_message = 'ERROR: '
+    unknown_resource_error_message = "Unknown resource"
+    unknown_operation_error_message = "Unknown operation"
+
 
     # ? Operations
     login_operation = "login"
