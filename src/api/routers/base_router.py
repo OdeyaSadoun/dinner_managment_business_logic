@@ -1,19 +1,21 @@
+from typing import Any
 from globals.consts.zmq_const_strings import ZMQConstStrings
 from globals.enums.response_status import ResponseStatus
-from models.data_classes.response import Response
+from infrastructures.interfaces.icontroller_managment import IControllerManager
+from models.data_classes.zmq_response import Response
 
 
 class BaseRouter:
-    def __init__(self, resource, ctrl):
+    def __init__(self, resource: str, ctrl: IControllerManager) -> None:
         self.resource = resource
         self._ctrl = ctrl
         self._operations = {}
         self._setup_operations()
 
-    def _setup_operations(self):
+    def _setup_operations(self) -> None:
         pass
 
-    def handle_operation(self, operation, data):
+    def handle_operation(self, operation, data) -> Any:
         if operation in self._operations:
             return self._operations[operation](data)
         else:
