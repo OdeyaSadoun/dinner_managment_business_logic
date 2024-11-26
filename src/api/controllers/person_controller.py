@@ -46,13 +46,13 @@ class PersonController(IControllerManager):
         )
         return self._data_zmq_client.send_request(request)
 
-    def seat_person(self, person_id: str) -> Response:
-        request = Request(
-            resource=ZMQConstStrings.person_resource,
-            operation=ZMQConstStrings.seat_person_operation,
-            data={ConstStrings.person_id_key: person_id}
-        )
-        return self._data_zmq_client.send_request(request)
+    # def seat_person(self, person_id: str) -> Response:
+    #     request = Request(
+    #         resource=ZMQConstStrings.person_resource,
+    #         operation=ZMQConstStrings.seat_person_operation,
+    #         data={ConstStrings.person_id_key: person_id}
+    #     )
+    #     return self._data_zmq_client.send_request(request)
     
     def delete_person(self, person_id: str) -> Response:
         request = Request(
@@ -61,3 +61,34 @@ class PersonController(IControllerManager):
             data={ConstStrings.person_id_key: person_id}
         )
         return self._data_zmq_client.send_request(request)
+
+    def seat_and_add_person_to_table(self, person_id: str, table_id: str) -> Response:
+        try:
+            seat_request = Request(
+                resource=ZMQConstStrings.person_resource,
+                operation=ZMQConstStrings.seat_person_operation,
+                data={ConstStrings.person_id_key: person_id}
+            )
+            seat_response = self._data_zmq_client.send_request(seat_request)
+            if seat_response.status != ResponseStatus.SUCCESS:
+                return seat_response
+
+            add_request = Request(
+                resource=ZMQConstStrings.table_resource,
+                operation=ZMQConstStrings.add_person_to_table_operation,
+                data={
+                    ConstStrings.table_id_key: table_id,
+                    ConstStrings.person_id_key: person_id
+                }
+            )
+            add_response = self._data_zmq_client.send_request(add_request)
+            if add_response.status != ResponseStatus.SUCCESS:
+                return add_response  
+
+            return Response(status=ResponseStatus.SUCCESS)
+
+        except Exception as e:
+            return Response(
+                status=ResponseStatus.ERROR,
+                data={ZMQConstStrings.error_message: str(e)}
+            )

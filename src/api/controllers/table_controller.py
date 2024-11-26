@@ -55,13 +55,13 @@ class TableController(IControllerManager):
         )
         return self._data_zmq_client.send_request(request)
 
-    def add_person_to_table(self, table_id: str, person: Person) -> Response:
-        request = Request(
-            resource=ZMQConstStrings.table_resource,
-            operation=ZMQConstStrings.add_person_to_table_operation,
-            data={
-                ConstStrings.table_id_key: table_id,
-                ConstStrings.person_key: person
-            }
-        )
-        return self._data_zmq_client.send_request(request)
+    # def add_person_to_table(self, table_id: str, person: Person) -> Response:
+    #     request = Request(
+    #         resource=ZMQConstStrings.table_resource,
+    #         operation=ZMQConstStrings.add_person_to_table_operation,
+    #         data={
+    #             ConstStrings.table_id_key: table_id,
+    #             ConstStrings.person_key: person
+    #         }
+    #     )
+    #     return self._data_zmq_client.send_request(request)
