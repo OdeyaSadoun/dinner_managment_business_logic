@@ -3,7 +3,7 @@ from typing import Any
 from api.routers.base_router import BaseRouter
 from globals.consts.const_strings import ConstStrings
 from globals.consts.zmq_const_strings import ZMQConstStrings
-from infrastructures.interfaces.icontroller_managment import IControllerManager
+from dinner_managment_business_logic.src.infrastructures.interfaces.icontroller_manager import IControllerManager
 from models.data_classes.zmq_response import Response
 
 
