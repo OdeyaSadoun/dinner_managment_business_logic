@@ -17,13 +17,14 @@ class AuthRouter(BaseRouter):
             ZMQConstStrings.register_operation: self.register
         }
 
+    def register(self, data: Any) -> Response:
+        username = data.get(ConstStrings.username_key)
+        password = data.get(ConstStrings.password_key)
+        return self._ctrl.register(username, password)
+    
     def login(self, data: Any) -> Response:
         username = data.get(ConstStrings.username_key)
         password = data.get(ConstStrings.password_key)
         return self._ctrl.login(username, password)
     
-    def register(self, data: Any) -> Response:
-        username = data.get(ConstStrings.username_key)
-        password = data.get(ConstStrings.password_key)
-        return self._ctrl.register(username, password)
 
