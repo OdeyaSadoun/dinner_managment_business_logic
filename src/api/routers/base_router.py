@@ -1,7 +1,8 @@
 from typing import Any
+
 from globals.consts.zmq_const_strings import ZMQConstStrings
 from globals.enums.response_status import ResponseStatus
-from dinner_managment_business_logic.src.infrastructures.interfaces.icontroller_manager import IControllerManager
+from infrastructures.interfaces.icontroller_manager import IControllerManager
 from models.data_classes.zmq_response import Response
 
 

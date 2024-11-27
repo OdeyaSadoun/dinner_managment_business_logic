@@ -1,6 +1,7 @@
 from typing import Any
 import zmq
 
+from globals.consts.const_strings import ConstStrings
 from globals.consts.zmq_const_strings import ZMQConstStrings
 from infrastructures.interfaces.izmq_server_manager import IZMQServerManager
 from globals.enums.response_status import ResponseStatus
@@ -22,7 +23,7 @@ class ZMQServerManager(IZMQServerManager):
     def _connect(self, host: str, port: str) -> None:
         self._context = zmq.Context()
         self._socket = self._context.socket(zmq.REP)
-        self._socket.bind(f"{ZMQConstStrings.base_tcp_connection_strings}{host}:{port}")
+        self._socket.bind(f"{ConstStrings.base_tcp_connection_strings}{host}:{port}")
 
     def _start_receiving_requests(self) -> None:
         self._handle_incoming_requests()

@@ -1,7 +1,7 @@
 import zmq
 
+from globals.consts.const_strings import ConstStrings
 from infrastructures.interfaces.izmq_client_manager import IZMQClientManager
-from globals.consts.zmq_const_strings import ZMQConstStrings
 from models.data_classes.zmq_response import Response
 from models.data_classes.zmq_request import Request
 
@@ -18,4 +18,4 @@ class ZMQClientManager(IZMQClientManager):
     def _connect(self, host: str, port: str) -> None:
         self.context = zmq.Context()
         self._socket = self.context.socket(zmq.REQ)
-        self._socket.connect(f"{ZMQConstStrings.base_tcp_connection_strings}{host}:{port}")
+        self._socket.connect(f"{ConstStrings.base_tcp_connection_strings}{host}:{port}")
