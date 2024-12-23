@@ -1,3 +1,4 @@
+from models.data_classes.auth import Auth
 from globals.consts.const_strings import ConstStrings
 from globals.consts.zmq_const_strings import ZMQConstStrings
 from infrastructures.interfaces.icontroller_manager import IControllerManager
@@ -21,13 +22,13 @@ class AuthController(IControllerManager):
         )
         return self._data_zmq_client.send_request(request)    
     
-    def register(self, username: str, password: str) -> Response:
+    def register(self, user: Auth) -> Response:
         request = Request(
             resource=ZMQConstStrings.auth_resource,
             operation=ZMQConstStrings.register_operation,
             data={
-                ConstStrings.username_key: username,
-                ConstStrings.password_key: password,
+                ConstStrings.auth_key: user
             }
         )
+        print("bl", request.data)
         return self._data_zmq_client.send_request(request)

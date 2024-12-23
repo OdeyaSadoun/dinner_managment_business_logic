@@ -20,3 +20,4 @@ class ConstStrings:
     people_key ="people"
     table_id_key = "table_id"
     table_key = "table"
+    auth_key = "auth"
