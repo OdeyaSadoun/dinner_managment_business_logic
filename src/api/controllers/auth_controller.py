@@ -11,13 +11,12 @@ class AuthController(IControllerManager):
     def __init__(self, data_zmq_client: IZMQClientManager):
         self._data_zmq_client = data_zmq_client
 
-    def login(self, username: str, password: str) -> Response:
+    def login(self, user: Auth) -> Response:
         request = Request(
             resource=ZMQConstStrings.auth_resource,
             operation=ZMQConstStrings.login_operation,
             data={
-                ConstStrings.username_key: username,
-                ConstStrings.password_key: password,
+                ConstStrings.auth_key: user
             }
         )
         return self._data_zmq_client.send_request(request)    
@@ -30,5 +29,4 @@ class AuthController(IControllerManager):
                 ConstStrings.auth_key: user
             }
         )
-        print("bl", request.data)
         return self._data_zmq_client.send_request(request)
