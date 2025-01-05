@@ -21,3 +21,4 @@ class ConstStrings:
     table_id_key = "table_id"
     table_key = "table"
     auth_key = "auth"
+    position_key = "position"

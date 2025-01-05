@@ -47,6 +47,19 @@ class TableController(IControllerManager):
         )
         return self._data_zmq_client.send_request(request)
 
+    def update_table_position(self, table_id: str, position: dict) -> Response:
+        print("position, ctrl, bl", position)
+        request = Request(
+            resource=ZMQConstStrings.table_resource,
+            operation=ZMQConstStrings.update_table_position_operation,
+            data={
+                ConstStrings.table_id_key: table_id,
+                ConstStrings.position_key: position
+            }
+        )
+        return self._data_zmq_client.send_request(request)
+
+
     def delete_table(self, table_id: str) -> Response:
         request = Request(
             resource=ZMQConstStrings.table_resource,
@@ -55,13 +68,24 @@ class TableController(IControllerManager):
         )
         return self._data_zmq_client.send_request(request)
 
-    # def add_person_to_table(self, table_id: str, person: Person) -> Response:
-    #     request = Request(
-    #         resource=ZMQConstStrings.table_resource,
-    #         operation=ZMQConstStrings.add_person_to_table_operation,
-    #         data={
-    #             ConstStrings.table_id_key: table_id,
-    #             ConstStrings.person_key: person
-    #         }
-    #     )
-    #     return self._data_zmq_client.send_request(request)
+    def add_person_to_table(self, table_id: str, person_id: str) -> Response:
+        request = Request(
+            resource=ZMQConstStrings.table_resource,
+            operation=ZMQConstStrings.add_person_to_table_operation,
+            data={
+                ConstStrings.table_id_key: table_id,
+                ConstStrings.person_id_key: person_id
+            }
+        )
+        return self._data_zmq_client.send_request(request)
+    
+    def remove_person_from_table(self, table_id: str, person_id: str) -> Response:
+        request = Request(
+            resource=ZMQConstStrings.table_resource,
+            operation=ZMQConstStrings.remove_person_from_table_operation,
+            data={
+                ConstStrings.table_id_key: table_id,
+                ConstStrings.person_id_key: person_id
+            }
+        )
+        return self._data_zmq_client.send_request(request)

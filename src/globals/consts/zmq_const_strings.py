@@ -31,7 +31,9 @@ class ZMQConstStrings:
     get_table_by_id_operation = "get_table_by_id"
     create_table_operation = "create_table"
     update_table_operation = "update_table"
+    update_table_position_operation = "update_table_position"
     delete_table_operation = "delete_table"
     add_person_to_table_operation = "add_person_to_table"
+    remove_person_from_table_operation = "remove_person_from_table"
     unseat_person_operation = "unseat_person"
     
