@@ -56,15 +56,19 @@ class PersonController(IControllerManager):
 
     def seat_and_add_person_to_table(self, person_id: str, table_id: str) -> Response:
         try:
+            print("seat_and_add_person_to_table")
             seat_request = Request(
                 resource=ZMQConstStrings.person_resource,
                 operation=ZMQConstStrings.seat_person_operation,
                 data={ConstStrings.person_id_key: person_id}
             )
             seat_response = self._data_zmq_client.send_request(seat_request)
+            
+            print(seat_response.status)
             if seat_response.status != ResponseStatus.SUCCESS:
                 return seat_response
 
+            print("add inbl")
             add_request = Request(
                 resource=ZMQConstStrings.table_resource,
                 operation=ZMQConstStrings.add_person_to_table_operation,
@@ -74,6 +78,7 @@ class PersonController(IControllerManager):
                 }
             )
             add_response = self._data_zmq_client.send_request(add_request)
+            print(add_response.data)
             if add_response.status != ResponseStatus.SUCCESS:
                 return add_response  
 
