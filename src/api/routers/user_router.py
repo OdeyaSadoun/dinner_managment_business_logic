@@ -6,7 +6,7 @@ from globals.consts.zmq_const_strings import ZMQConstStrings
 from models.data_classes.zmq_response import Response
 
 
-class AuthRouter(BaseRouter):
+class UserRouter(BaseRouter):
     def __init__(self, resource, ctrl):
         super().__init__(resource, ctrl)
         self._setup_operations()
@@ -18,11 +18,11 @@ class AuthRouter(BaseRouter):
         }
 
     def register(self, data: Any) -> Response:
-        user = data.get(ConstStrings.auth_key)
+        user = data.get(ConstStrings.user_key)
         return self._ctrl.register(user)
     
     def login(self, data: Any) -> Response:
-        user = data.get(ConstStrings.auth_key)
+        user = data.get(ConstStrings.user_key)
         return self._ctrl.login(user)
     
 

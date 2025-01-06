@@ -1,10 +1,10 @@
 import os
 from typing import List
 
-from api.controllers.auth_controller import AuthController
+from api.controllers.user_controller import UserController
 from api.controllers.table_controller import TableController
 from api.controllers.person_controller import PersonController
-from api.routers.auth_router import AuthRouter
+from api.routers.user_router import UserRouter
 from api.routers.table_router import TableRouter
 from api.routers.person_router import PersonRouter
 from api.routers.base_router import BaseRouter
@@ -22,9 +22,9 @@ class Factory:
         port = os.getenv(ConstStrings.database_gateway_port_env_key)
         return ZMQClientManager(host, port)
     
-    def create_auth_router(data_zmq_client: IZMQClientManager) -> BaseRouter:
-        auth_controller = AuthController(data_zmq_client)
-        return AuthRouter(ZMQConstStrings.auth_resource, auth_controller)
+    def create_user_router(data_zmq_client: IZMQClientManager) -> BaseRouter:
+        user_controller = UserController(data_zmq_client)
+        return UserRouter(ZMQConstStrings.auth_resource, user_controller)
     
     def create_person_router(data_zmq_client: IZMQClientManager) -> BaseRouter:
         person_controller = PersonController(data_zmq_client)
@@ -36,7 +36,7 @@ class Factory:
     
     def create_routers(data_zmq_client: IZMQClientManager) -> List[BaseRouter]:
         return [
-            Factory.create_auth_router(data_zmq_client),
+            Factory.create_user_router(data_zmq_client),
             Factory.create_person_router(data_zmq_client),
             Factory.create_table_router(data_zmq_client)
         ]
