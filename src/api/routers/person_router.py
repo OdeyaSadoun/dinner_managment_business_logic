@@ -19,7 +19,8 @@ class PersonRouter(BaseRouter):
             ZMQConstStrings.create_person_operation: self.create_person,
             ZMQConstStrings.update_person_operation: self.update_person,
             ZMQConstStrings.delete_person_operation: self.delete_person,
-            ZMQConstStrings.seat_person_operation: self.seat_person,
+            ZMQConstStrings.seat_and_add_person_to_table_operation: self.seat_and_add_person_to_table,
+            ZMQConstStrings.unseat_and_remove_person_from_table_operation: self.unseat_and_remove_person_from_table,
         }
 
     def get_all_people(self, data: Any=None) -> Response:
@@ -38,9 +39,15 @@ class PersonRouter(BaseRouter):
         person = data.get(ConstStrings.person_key)
         return self._ctrl.update_person(person_id, person)
 
-    def seat_person(self, data: Any) -> Response:
+    def seat_and_add_person_to_table(self, data: Any) -> Response:
         person_id = data.get(ConstStrings.person_id_key)
-        return self._ctrl.seat_person(person_id)
+        table_id = data.get(ConstStrings.table_id_key)
+        return self._ctrl.seat_and_add_person_to_table(person_id, table_id)    
+    
+    def unseat_and_remove_person_from_table(self, data: Any) -> Response:
+        person_id = data.get(ConstStrings.person_id_key)
+        table_id = data.get(ConstStrings.table_id_key)
+        return self._ctrl.unseat_and_remove_person_from_table(person_id, table_id)
 
     def delete_person(self, data: Any) -> Response:
         person_id = data.get(ConstStrings.person_id_key)

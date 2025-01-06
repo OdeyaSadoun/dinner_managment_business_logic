@@ -20,8 +20,6 @@ class TableRouter(BaseRouter):
             ZMQConstStrings.update_table_operation: self.update_table,
             ZMQConstStrings.update_table_position_operation: self.update_table_position,
             ZMQConstStrings.delete_table_operation: self.delete_table,
-            ZMQConstStrings.add_person_to_table_operation: self.add_person_to_table,
-            ZMQConstStrings.remove_person_from_table_operation: self.remove_person_from_table,
         }
 
     def get_all_tables(self, data: Any=None) -> Response:
@@ -43,19 +41,8 @@ class TableRouter(BaseRouter):
     def update_table_position(self, data: Any) -> Response:
         table_id = data.get(ConstStrings.table_id_key)
         position = data.get(ConstStrings.position_key)
-        print("position, router, bl", position)
         return self._ctrl.update_table_position(table_id, position)
 
     def delete_table(self, data: Any) -> Response:
         table_id = data.get(ConstStrings.table_id_key)
         return self._ctrl.delete_table(table_id)
-    
-    def add_person_to_table(self, data: Any) -> Response:
-        table_id = data.get(ConstStrings.table_id_key)
-        person_id = data.get(ConstStrings.person_id_key)
-        return self._ctrl.add_person_to_table(table_id, person_id)   
-        
-    def remove_person_from_table(self, data: Any) -> Response:
-        table_id = data.get(ConstStrings.table_id_key)
-        person_id = data.get(ConstStrings.person_id_key)
-        return self._ctrl.remove_person_from_table(table_id, person_id)   

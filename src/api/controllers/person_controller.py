@@ -45,14 +45,6 @@ class PersonController(IControllerManager):
             }
         )
         return self._data_zmq_client.send_request(request)
-
-    # def seat_person(self, person_id: str) -> Response:
-    #     request = Request(
-    #         resource=ZMQConstStrings.person_resource,
-    #         operation=ZMQConstStrings.seat_person_operation,
-    #         data={ConstStrings.person_id_key: person_id}
-    #     )
-    #     return self._data_zmq_client.send_request(request)
     
     def delete_person(self, person_id: str) -> Response:
         request = Request(
@@ -84,6 +76,37 @@ class PersonController(IControllerManager):
             add_response = self._data_zmq_client.send_request(add_request)
             if add_response.status != ResponseStatus.SUCCESS:
                 return add_response  
+
+            return Response(status=ResponseStatus.SUCCESS)
+
+        except Exception as e:
+            return Response(
+                status=ResponseStatus.ERROR,
+                data={ZMQConstStrings.error_message: str(e)}
+            )
+
+    def unseat_and_remove_person_from_table(self, person_id: str, table_id: str) -> Response:
+        try:
+            unseat_request = Request(
+                resource=ZMQConstStrings.person_resource,
+                operation=ZMQConstStrings.unseat_person_operation,
+                data={ConstStrings.person_id_key: person_id}
+            )
+            unseat_response = self._data_zmq_client.send_request(unseat_request)
+            if unseat_response.status != ResponseStatus.SUCCESS:
+                return unseat_response
+
+            remove_request = Request(
+                resource=ZMQConstStrings.table_resource,
+                operation=ZMQConstStrings.remove_person_from_table_operation,
+                data={
+                    ConstStrings.table_id_key: table_id,
+                    ConstStrings.person_id_key: person_id
+                }
+            )
+            remove_response = self._data_zmq_client.send_request(remove_request)
+            if remove_response.status != ResponseStatus.SUCCESS:
+                return remove_response  
 
             return Response(status=ResponseStatus.SUCCESS)
 

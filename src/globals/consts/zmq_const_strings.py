@@ -25,6 +25,7 @@ class ZMQConstStrings:
     create_person_operation = "create_person"
     update_person_operation = "update_person"
     seat_person_operation = "seat_person"
+    unseat_person_operation = "unseat_person"
     delete_person_operation = "delete_person"
 
     get_all_tables_operation = "get_all_tables"
@@ -35,5 +36,5 @@ class ZMQConstStrings:
     delete_table_operation = "delete_table"
     add_person_to_table_operation = "add_person_to_table"
     remove_person_from_table_operation = "remove_person_from_table"
-    unseat_person_operation = "unseat_person"
-    
+    unseat_and_remove_person_from_table_operation = "unseat_and_remove_person_from_table"
+    seat_and_add_person_to_table_operation = "seat_and_add_person_to_table"
