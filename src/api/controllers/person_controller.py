@@ -56,7 +56,6 @@ class PersonController(IControllerManager):
 
     def seat_and_add_person_to_table(self, person_id: str, table_id: str) -> Response:
         try:
-            print("seat_and_add_person_to_table")
             seat_request = Request(
                 resource=ZMQConstStrings.person_resource,
                 operation=ZMQConstStrings.seat_person_operation,
