@@ -20,14 +20,64 @@ class UserController(IControllerManager):
                 ConstStrings.user_key: user
             }
         )
-        return self._data_zmq_client.send_request(request)    
-    
+        return self._data_zmq_client.send_request(request)
+
     def register(self, user: User) -> Response:
         request = Request(
             resource=ZMQConstStrings.auth_resource,
             operation=ZMQConstStrings.register_operation,
             data={
                 ConstStrings.user_key: user
+            }
+        )
+        return self._data_zmq_client.send_request(request)
+
+    def get_all_users(self) -> Response:
+        request = Request(
+            resource=ZMQConstStrings.auth_resource,
+            operation=ZMQConstStrings.get_all_users_operation,
+            data={}
+        )
+        return self._data_zmq_client.send_request(request)
+
+    def get_user_by_id(self, user_id: str) -> Response:
+        request = Request(
+            resource=ZMQConstStrings.auth_resource,
+            operation=ZMQConstStrings.get_user_by_id_operation,
+            data={
+                ConstStrings.user_id_key: user_id
+            }
+        )
+        return self._data_zmq_client.send_request(request)
+
+    def get_user_by_username_and_password(self, username: str, password: str) -> Response:
+        request = Request(
+            resource=ZMQConstStrings.auth_resource,
+            operation=ZMQConstStrings.get_user_by_username_and_password_operation,
+            data={
+                ConstStrings.username_key: username,
+                ConstStrings.password_key: password
+            }
+        )
+        return self._data_zmq_client.send_request(request)
+
+    def delete_user(self, user_id: str) -> Response:
+        request = Request(
+            resource=ZMQConstStrings.auth_resource,
+            operation=ZMQConstStrings.delete_user_operation,
+            data={
+                ConstStrings.user_id_key: user_id
+            }
+        )
+        return self._data_zmq_client.send_request(request)
+
+    def update_user(self, user_id: str, updated_user_data: dict) -> Response:
+        request = Request(
+            resource=ZMQConstStrings.auth_resource,
+            operation=ZMQConstStrings.update_user_operation,
+            data={
+                ConstStrings.user_id_key: user_id,
+                ConstStrings.user_key: updated_user_data
             }
         )
         return self._data_zmq_client.send_request(request)
