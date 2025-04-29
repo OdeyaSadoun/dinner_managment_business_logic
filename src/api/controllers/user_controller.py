@@ -63,6 +63,7 @@ class UserController(IControllerManager):
         return self._data_zmq_client.send_request(request)
 
     def delete_user(self, user_id: str) -> Response:
+        print("user_id bl", user_id)
         request = Request(
             resource=ZMQConstStrings.auth_resource,
             operation=ZMQConstStrings.delete_user_operation,

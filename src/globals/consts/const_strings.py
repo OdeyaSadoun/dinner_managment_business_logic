@@ -23,4 +23,4 @@ class ConstStrings:
     auth_key = "auth"
     user_key = "user"
     position_key = "position"
-    user_id_key = "user_id_key"
+    user_id_key = "user_id"
