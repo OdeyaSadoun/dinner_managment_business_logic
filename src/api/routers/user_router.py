@@ -31,6 +31,7 @@ class UserRouter(BaseRouter):
         return self._ctrl.login(user)
 
     def get_all_users(self, data: Any) -> Response:
+        print("route bl")
         return self._ctrl.get_all_users()
 
     def get_user_by_id(self, data: Any) -> Response:

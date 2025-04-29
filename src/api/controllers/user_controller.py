@@ -33,6 +33,7 @@ class UserController(IControllerManager):
         return self._data_zmq_client.send_request(request)
 
     def get_all_users(self) -> Response:
+        print("ctrl bl")
         request = Request(
             resource=ZMQConstStrings.auth_resource,
             operation=ZMQConstStrings.get_all_users_operation,
