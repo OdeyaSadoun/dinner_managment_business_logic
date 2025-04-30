@@ -34,6 +34,8 @@ class TableController(IControllerManager):
             operation=ZMQConstStrings.create_table_operation,
             data={ConstStrings.table_key: table}
         )
+        response = self._data_zmq_client.send_request(request)
+        print("response", response.data)
         return self._data_zmq_client.send_request(request)
 
     def update_table(self, table_id: str, table: Table) -> Response:
