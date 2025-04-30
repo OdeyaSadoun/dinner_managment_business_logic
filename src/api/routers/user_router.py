@@ -44,12 +44,11 @@ class UserRouter(BaseRouter):
         return self._ctrl.get_user_by_username_and_password(username, password)
 
     def delete_user(self, data: Any) -> Response:
-        print("data", data)
         user_id = data.get(ConstStrings.user_id_key)
-        print("user_id bl route", user_id)
         return self._ctrl.delete_user(user_id)
 
     def update_user(self, data: Any) -> Response:
+        print("data in route bl", data)
         user_id = data.get(ConstStrings.user_id_key)
         updated_user_data = data.get(ConstStrings.user_key)
         return self._ctrl.update_user(user_id, updated_user_data)

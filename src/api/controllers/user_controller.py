@@ -74,6 +74,7 @@ class UserController(IControllerManager):
         return self._data_zmq_client.send_request(request)
 
     def update_user(self, user_id: str, updated_user_data: dict) -> Response:
+        print("updated_user_data", updated_user_data)
         request = Request(
             resource=ZMQConstStrings.auth_resource,
             operation=ZMQConstStrings.update_user_operation,
