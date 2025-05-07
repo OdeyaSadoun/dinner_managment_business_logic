@@ -1,3 +1,4 @@
+from fastapi import UploadFile
 from globals.consts.const_strings import ConstStrings
 from globals.consts.zmq_const_strings import ZMQConstStrings
 from globals.enums.response_status import ResponseStatus
@@ -35,11 +36,27 @@ class PersonController(IControllerManager):
         )
         return self._data_zmq_client.send_request(request)
     
+    def get_manual_people(self) -> Response:
+        request = Request(
+            resource=ZMQConstStrings.person_resource,
+            operation=ZMQConstStrings.get_manual_people_operation,
+            data={}
+        )
+        return self._data_zmq_client.send_request(request)
+    
     def create_person(self, person: Person) -> Response:
         request = Request(
             resource=ZMQConstStrings.person_resource,
             operation=ZMQConstStrings.create_person_operation,
             data={ConstStrings.person_key: person}
+        )
+        return self._data_zmq_client.send_request(request)
+    
+    def import_people_from_csv(self, people: list[dict]) -> Response:
+        request = Request(
+            resource=ZMQConstStrings.person_resource,
+            operation=ZMQConstStrings.import_people_from_csv_operation,
+            data={ConstStrings.people_key: people}
         )
         return self._data_zmq_client.send_request(request)
 
