@@ -58,6 +58,7 @@ class PersonController(IControllerManager):
             operation=ZMQConstStrings.import_people_from_csv_operation,
             data={ConstStrings.people_key: people}
         )
+        print("import csv ctrl bl")
         return self._data_zmq_client.send_request(request)
 
     def update_person(self, person_id: str, person: Person) -> Response:
