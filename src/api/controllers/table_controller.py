@@ -47,6 +47,15 @@ class TableController(IControllerManager):
         )
         return self._data_zmq_client.send_request(request)
 
+    def import_tables_from_csv(self, tables: list[dict]) -> Response:
+        request = Request(
+            resource=ZMQConstStrings.table_resource,
+            operation=ZMQConstStrings.import_tables_from_csv_operation,
+            data={ConstStrings.tables_key: tables}
+        )
+        print("import csv ctrl bl")
+        return self._data_zmq_client.send_request(request)
+
     def update_table_position(self, table_id: str, position: dict) -> Response:
         request = Request(
             resource=ZMQConstStrings.table_resource,

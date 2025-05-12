@@ -20,8 +20,13 @@ class TableRouter(BaseRouter):
             ZMQConstStrings.update_table_operation: self.update_table,
             ZMQConstStrings.update_table_position_operation: self.update_table_position,
             ZMQConstStrings.delete_table_operation: self.delete_table,
+            ZMQConstStrings.import_tables_from_csv_operation: self.import_tables_from_csv,
         }
-
+        
+    def import_tables_from_csv(self, data: Any) -> Response:
+        tables = data.get(ConstStrings.tables_key)
+        return self._ctrl.import_tables_from_csv(tables)
+    
     def get_all_tables(self, data: Any=None) -> Response:
         return self._ctrl.get_all_tables()
 
