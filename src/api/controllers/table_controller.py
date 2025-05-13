@@ -27,6 +27,15 @@ class TableController(IControllerManager):
             data={ConstStrings.table_id_key: table_id}
         )
         return self._data_zmq_client.send_request(request)
+    
+
+    def sync_tables_with_people(self) -> Response:
+        request = Request(
+            resource=ZMQConstStrings.table_resource,
+            operation=ZMQConstStrings.sync_tables_people_operation,
+            data={}
+        )
+        return self._data_zmq_client.send_request(request)
 
     def create_table(self, table: Table) -> Response:
         request = Request(
@@ -85,8 +94,8 @@ class TableController(IControllerManager):
     #         }
     #     )
     #     return self._data_zmq_client.send_request(request)
-    
-    # def remove_person_from_table(self, table_id: str, person_id: str) -> Response:
+
+    def remove_person_from_table(self, table_id: str, person_id: str) -> Response:
         request = Request(
             resource=ZMQConstStrings.table_resource,
             operation=ZMQConstStrings.remove_person_from_table_operation,

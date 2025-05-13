@@ -21,8 +21,12 @@ class TableRouter(BaseRouter):
             ZMQConstStrings.update_table_position_operation: self.update_table_position,
             ZMQConstStrings.delete_table_operation: self.delete_table,
             ZMQConstStrings.import_tables_from_csv_operation: self.import_tables_from_csv,
+            ZMQConstStrings.sync_tables_people_operation: self.sync_tables_with_people,
         }
         
+    def sync_tables_with_people(self, data: Any = None) -> Response:
+        return self._ctrl.sync_tables_with_people()
+    
     def import_tables_from_csv(self, data: Any) -> Response:
         tables = data.get(ConstStrings.tables_key)
         return self._ctrl.import_tables_from_csv(tables)

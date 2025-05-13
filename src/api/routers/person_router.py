@@ -31,6 +31,7 @@ class PersonRouter(BaseRouter):
         return self._ctrl.import_people_from_csv(people)
 
     def get_all_people(self, data: Any = None) -> Response:
+        print("in get all  people")
         return self._ctrl.get_all_people()
 
     def get_manual_people(self, data: Any) -> Response:
@@ -61,4 +62,5 @@ class PersonRouter(BaseRouter):
 
     def delete_person(self, data: Any) -> Response:
         person_id = data.get(ConstStrings.person_id_key)
-        return self._ctrl.delete_person(person_id)
+        table_number = data.get(ConstStrings.table_number_key)
+        return self._ctrl.delete_person(person_id, table_number)

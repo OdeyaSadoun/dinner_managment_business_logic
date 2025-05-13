@@ -46,3 +46,5 @@ class ZMQConstStrings:
     unseat_and_remove_person_from_table_operation = "unseat_and_remove_person_from_table"
     seat_and_add_person_to_table_operation = "seat_and_add_person_to_table"
     import_people_from_csv_operation = "import_people_from_csv"
+    sync_tables_people_operation = "sync_tables_people"
+    get_table_by_number_operation = "get_table_by_number"
