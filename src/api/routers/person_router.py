@@ -63,4 +63,5 @@ class PersonRouter(BaseRouter):
     def delete_person(self, data: Any) -> Response:
         person_id = data.get(ConstStrings.person_id_key)
         table_number = data.get(ConstStrings.table_number_key)
-        return self._ctrl.delete_person(person_id, table_number)
+        is_reach_the_dinner = data.get(ConstStrings.is_reach_the_dinner_key)
+        return self._ctrl.delete_person(person_id, table_number, is_reach_the_dinner)

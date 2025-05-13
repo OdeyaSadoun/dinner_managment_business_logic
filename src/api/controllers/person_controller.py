@@ -72,14 +72,24 @@ class PersonController(IControllerManager):
         )
         return self._data_zmq_client.send_request(request)
     
-    def delete_person(self, person_id: str, table_number: int) -> Response:    
-        request_get_table = Request(
-                resource=ZMQConstStrings.table_resource,
-                operation=ZMQConstStrings.get_table_by_number_operation,
-                data={ConstStrings.table_number_key: table_number}
+    def delete_person(self, person_id: str, table_number: int, is_reach_the_dinner: bool) -> Response:
+        if not is_reach_the_dinner:
+            # לא צריך להסיר אותו מהשולחן
+            request_delete_person = Request(
+                resource=ZMQConstStrings.person_resource,
+                operation=ZMQConstStrings.delete_person_operation,
+                data={ConstStrings.person_id_key: person_id}
             )
+            return self._data_zmq_client.send_request(request_delete_person)
+
+        # המשך מחיקה רגילה כמו קודם:
+        request_get_table = Request(
+            resource=ZMQConstStrings.table_resource,
+            operation=ZMQConstStrings.get_table_by_number_operation,
+            data={ConstStrings.table_number_key: table_number}
+        )
         response_get_table = self._data_zmq_client.send_request(request_get_table)
-        print(response_get_table.data)
+
         if response_get_table.status == ResponseStatus.SUCCESS:
             table_id = response_get_table.data["table_id"]
 
@@ -91,14 +101,15 @@ class PersonController(IControllerManager):
                     ConstStrings.person_id_key: person_id
                 }
             )
-            response_get_table = self._data_zmq_client.send_request(request_delete_person_from_table)
-            if response_get_table.status == ResponseStatus.SUCCESS:
+            response_remove = self._data_zmq_client.send_request(request_delete_person_from_table)
+            if response_remove.status == ResponseStatus.SUCCESS:
                 request_delete_person = Request(
                     resource=ZMQConstStrings.person_resource,
                     operation=ZMQConstStrings.delete_person_operation,
                     data={ConstStrings.person_id_key: person_id}
                 )
                 return self._data_zmq_client.send_request(request_delete_person)
+
         return Response(status=ResponseStatus.ERROR)
 
     def seat_and_add_person_to_table(self, person_id: str, table_id: str) -> Response:

@@ -15,6 +15,7 @@ class ConstStrings:
     
     # ? Keys
     id_key = "id"
+    is_reach_the_dinner_key = "is_reach_the_dinner"
     table_number_key = "table_number"
     person_id_key = "person_id"
     person_key = "person"
