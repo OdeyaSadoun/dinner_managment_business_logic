@@ -62,16 +62,60 @@ class PersonController(IControllerManager):
         return self._data_zmq_client.send_request(request)
 
     def update_person(self, person_id: str, person: Person) -> Response:
-        request = Request(
-            resource=ZMQConstStrings.person_resource,
-            operation=ZMQConstStrings.update_person_operation,
-            data={
-                ConstStrings.person_id_key: person_id,
-                ConstStrings.person_key: person
-            }
-        )
-        return self._data_zmq_client.send_request(request)
-    
+        try:
+            # שליפת המשתמש הקיים
+            response_get = self._data_zmq_client.send_request(Request(
+                resource=ZMQConstStrings.person_resource,
+                operation=ZMQConstStrings.get_person_by_id_operation,
+                data={ConstStrings.person_id_key: person_id}
+            ))
+            print("response_get", response_get.data)
+            if response_get.status != ResponseStatus.SUCCESS:
+                return response_get
+
+            existing_person = response_get.data[ConstStrings.person_key]
+            print("existing_person", existing_person)
+            was_seated_and_now_not = (
+                existing_person.get("is_reach_the_dinner") is True and
+                person["is_reach_the_dinner"] is False and
+                existing_person.get("table_number") is not None
+            )
+            print("was_seated_and_now_not", was_seated_and_now_not)
+            # שליחת עדכון רגיל
+            update_response = self._data_zmq_client.send_request(Request(
+                resource=ZMQConstStrings.person_resource,
+                operation=ZMQConstStrings.update_person_operation,
+                data={
+                    ConstStrings.person_id_key: person_id,
+                    ConstStrings.person_key: person
+                }
+            ))
+            print("update_response", update_response.data)
+            # הסרה מהשולחן
+            if was_seated_and_now_not:
+                table_number = existing_person["table_number"]
+                response_get_table = self._data_zmq_client.send_request(Request(
+                    resource=ZMQConstStrings.table_resource,
+                    operation=ZMQConstStrings.get_table_by_number_operation,
+                    data={ConstStrings.table_number_key: table_number}
+                ))
+
+                if response_get_table.status == ResponseStatus.SUCCESS:
+                    table_id = response_get_table.data["table_id"]
+                    self._data_zmq_client.send_request(Request(
+                        resource=ZMQConstStrings.table_resource,
+                        operation=ZMQConstStrings.remove_person_from_table_operation,
+                        data={
+                            ConstStrings.table_id_key: table_id,
+                            ConstStrings.person_id_key: person_id
+                        }
+                    ))
+
+            return update_response
+
+        except Exception as e:
+            return Response(status=ResponseStatus.ERROR, data={ZMQConstStrings.error_message: str(e)})
+
     def delete_person(self, person_id: str, table_number: int, is_reach_the_dinner: bool) -> Response:
         if not is_reach_the_dinner:
             # לא צריך להסיר אותו מהשולחן
