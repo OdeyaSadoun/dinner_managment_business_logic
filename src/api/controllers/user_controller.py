@@ -20,6 +20,7 @@ class UserController(IControllerManager):
                 ConstStrings.user_key: user
             }
         )
+        print("before send")
         return self._data_zmq_client.send_request(request)
 
     def register(self, user: User) -> Response:

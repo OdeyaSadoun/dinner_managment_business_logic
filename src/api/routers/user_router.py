@@ -27,7 +27,9 @@ class UserRouter(BaseRouter):
         return self._ctrl.register(user)
 
     def login(self, data: Any) -> Response:
+        print("login router")
         user = data.get(ConstStrings.user_key)
+        print(user)
         return self._ctrl.login(user)
 
     def get_all_users(self, data: Any) -> Response:
