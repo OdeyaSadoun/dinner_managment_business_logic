@@ -4,6 +4,7 @@ class ConstStrings:
 
     # ? ENV keys
     localhost_env_key = "LOCAL_HOST"
+    host_env_key = "HOST"
     database_gateway_host_env_key = "DATABASE_GATEWAY_HOST"
     local_port_env_key = "LOCAL_PORT"
     database_gateway_port_env_key = "DATABASE_GATEWAY_PORT"

@@ -6,6 +6,8 @@
 # Node artifact files
 node_modules/
 dist/
+venv/
+.env
 
 # Compiled Java class files
 *.class

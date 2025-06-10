@@ -22,8 +22,6 @@ class Factory:
     def create_data_zmq_client() -> IZMQClientManager:
         host = os.getenv(ConstStrings.localhost_env_key)        
         port = int(os.getenv(ConstStrings.database_gateway_port_env_key))
-        print("HOST:", host)
-        print("PORT:", port)
         return ZMQClientManager(host, port)
     
     def create_user_router(data_zmq_client: IZMQClientManager) -> BaseRouter:
@@ -46,9 +44,9 @@ class Factory:
         ]
 
     def create_zmq_server(routers: List[BaseRouter]) -> IZMQServerManager:
-        host = os.getenv(ConstStrings.localhost_env_key)        
+        localhost = os.getenv(ConstStrings.host_env_key)        
         port = os.getenv(ConstStrings.business_logic_port_env_key)
-        return ZMQServerManager(routers, host, port)
+        return ZMQServerManager(routers, localhost, port)
     
     def create_all() -> None:
         data_zmq_client = Factory.create_data_zmq_client()

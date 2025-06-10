@@ -1,2 +1,5 @@
 pydantic
 pyzmq
+python-dotenv
+python-multipart
+fastapi
